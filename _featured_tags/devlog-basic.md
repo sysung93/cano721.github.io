@@ -4,5 +4,5 @@ title: Basic
 slug: basic
 category: devlog
 menu: false
-order: 3
+order: 2
 ---

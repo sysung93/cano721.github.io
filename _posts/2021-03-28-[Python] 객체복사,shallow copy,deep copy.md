@@ -3,7 +3,7 @@
 title: "[Python] 객체복사,shallow copy,deep copy"
 excerpt: "shallow copy와 deep copy 차이점 알아보기"
 
-categories: devlog
+categories: [devlog]
 
 tag: basic
 
