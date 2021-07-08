@@ -3,9 +3,9 @@
 title: "[Python] 객체복사,shallow copy,deep copy"
 excerpt: "shallow copy와 deep copy 차이점 알아보기"
 
-categories: [Basic]
+categories: [Devlog]
 
-tag: [python, shallow copy, deep copy, 객체복사, copy]
+tag: [Basic]
 
 toc: true
 
