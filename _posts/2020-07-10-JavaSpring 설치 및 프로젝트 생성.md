@@ -1,7 +1,7 @@
 ---
 
 title: "JavaSpring 설치 및 프로젝트 생성"
-excerpt: "shallow copy와 deep copy 차이점 알아보기"
+excerpt: "Spring 프로젝트 생성 및 실행"
 
 categories: [devlog]
 
@@ -13,7 +13,7 @@ toc_sticky: true
 
 date: 2021-07-10
 
-last_modified_at: 2021-07-10
+last_modified_at: 2021-07-15
 ---
 
 
@@ -36,7 +36,7 @@ https://start.spring.io/ 접속
 
 
 
-![spring initializr](md-images/javaSpringSetting1.JPG)
+![스프링 프로젝트 생성](/md-images/javaSpringSetting/javaSpringSetting1.JPG)
 
 
 
@@ -135,7 +135,7 @@ IntelliJ에서  Open으로 압축 푼 해당 프로젝트 실행
 
 
 
-![프로젝트실행](md-images/javaSpringSetting2.JPG)
+![프로젝트실행](/md-images/javaSpringSetting/javaSpringSetting2.JPG)
 
 
 
@@ -147,7 +147,7 @@ hello-spring -> src -> main -> java -> hello.hellospring -> HelloSpringApplicati
 
 
 
-![브라우저검색](md-images/javaSpringSetting3.JPG)
+![브라우저검색](/md-images/javaSpringSetting/javaSpringSetting3.JPG)
 
 브라우저에서 http://localhost:8080/ 검색 시
 
