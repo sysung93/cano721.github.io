@@ -44,7 +44,7 @@ https://start.spring.io/ 접속
 
 * Maven Project
   * 필요로하는 라이브러리와 전체적인 라이프사이클까지 관리해주는 툴
-  * XML[^XML]로 라이브러리를 정의하고 활용
+  * XML[^1]로 라이브러리를 정의하고 활용
 
 * Gradle Project
   * 빌드 배포 도구 - 별도의 빌드 스크립트를 통해 사용할 어플리케이션 버전, 라이브러리등 항목 설정 가능
@@ -100,8 +100,8 @@ https://start.spring.io/ 접속
   * 의존관계 복잡 프로젝트 설정으로 부적절
   * 상속구조를 이용한 멀티 모듈 구현
   * 특정 설정을 소수의 모듈에서 공유하기 위해선 부모 프로젝트를 생성해서 상속해야함(상속의 단점)
-  * Gradle은 그루비(Groovy)[^Groovy] 사용, 동적 Build는 Groovy script로 플러그인을 호출 또는 직접 코드 작성
-  * Configuration Injection[^ConfigurationInjection] 방식을 사용 -> 공통 모듈 상속해서 사용하는 단점[^단점]을 커버
+  * Gradle은 그루비(Groovy)[^2] 사용, 동적 Build는 Groovy script로 플러그인을 호출 또는 직접 코드 작성
+  * Configuration Injection[^3] 방식을 사용 -> 공통 모듈 상속해서 사용하는 단점[^4]을 커버
   * 설정 주입 시 프로젝트 조건을 체크할 수 있어서 프로젝트별로 다르게 설정 가능
 
 #### 결론
@@ -114,10 +114,10 @@ https://start.spring.io/ 접속
 
 ---
 
-[^XML]: XML(eXtensible Markup Language) : HTML과 매우 비슷한 문자 기반의 마크업 언어(추후 정리)
-[^Groovy]:JVM에서 실행되는 스크립트 언어
-[^ConfigurationInjection]: 설정 주입 방식으로, maven에 비해 보다 유연하게 설정 주입이 가능하단 뜻으로 해석
-[^단점]: 상속구조이기에 부모 모듈의 기능 변경이 하위모듈에도 영향이 갈 수 있음.
+[^1]: XML(eXtensible Markup Language) : HTML과 매우 비슷한 문자 기반의 마크업 언어(추후 정리)
+[^2]:JVM에서 실행되는 스크립트 언어
+[^3]: 설정 주입 방식으로, maven에 비해 보다 유연하게 설정 주입이 가능하단 뜻으로 해석
+[^4]: 상속구조이기에 부모 모듈의 기능 변경이 하위모듈에도 영향이 갈 수 있음.
 
 
 
