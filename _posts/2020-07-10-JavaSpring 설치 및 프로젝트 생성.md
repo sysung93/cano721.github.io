@@ -36,7 +36,7 @@ https://start.spring.io/ 접속
 
 
 
-![스프링 프로젝트 생성](/md-images/javaSpringSetting/javaSpringSetting1.JPG)
+<img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/javaSpringSetting/javaSpringSetting1.JPG?raw=true">
 
 
 
@@ -101,7 +101,7 @@ https://start.spring.io/ 접속
   * 상속구조를 이용한 멀티 모듈 구현
   * 특정 설정을 소수의 모듈에서 공유하기 위해선 부모 프로젝트를 생성해서 상속해야함(상속의 단점)
   * Gradle은 그루비(Groovy)[^Groovy] 사용, 동적 Build는 Groovy script로 플러그인을 호출 또는 직접 코드 작성
-  * Configuration Injection[^ConfigurationInjection] 방식을 사용 -> 공통 모듈 상속해서 사용하는 단점[^공통모듈상속해서사용하는단점]을 커버
+  * Configuration Injection[^ConfigurationInjection] 방식을 사용 -> 공통 모듈 상속해서 사용하는 단점[^단점]을 커버
   * 설정 주입 시 프로젝트 조건을 체크할 수 있어서 프로젝트별로 다르게 설정 가능
 
 #### 결론
@@ -117,7 +117,7 @@ https://start.spring.io/ 접속
 [^XML]: XML(eXtensible Markup Language) : HTML과 매우 비슷한 문자 기반의 마크업 언어(추후 정리)
 [^Groovy]:JVM에서 실행되는 스크립트 언어
 [^ConfigurationInjection]: 설정 주입 방식으로, maven에 비해 보다 유연하게 설정 주입이 가능하단 뜻으로 해석
-[^공통모듈상속해서사용하는단점]: 상속구조이기에 부모 모듈의 기능 변경이 하위모듈에도 영향이 갈 수 있음.
+[^단점]: 상속구조이기에 부모 모듈의 기능 변경이 하위모듈에도 영향이 갈 수 있음.
 
 
 
@@ -135,7 +135,7 @@ IntelliJ에서  Open으로 압축 푼 해당 프로젝트 실행
 
 
 
-![프로젝트실행](/md-images/javaSpringSetting/javaSpringSetting2.JPG)
+<img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/javaSpringSetting/javaSpringSetting2.JPG?raw=true">
 
 
 
@@ -147,7 +147,7 @@ hello-spring -> src -> main -> java -> hello.hellospring -> HelloSpringApplicati
 
 
 
-![브라우저검색](/md-images/javaSpringSetting/javaSpringSetting3.JPG)
+<img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/javaSpringSetting/javaSpringSetting3.JPG?raw=true">
 
 브라우저에서 http://localhost:8080/ 검색 시
 
