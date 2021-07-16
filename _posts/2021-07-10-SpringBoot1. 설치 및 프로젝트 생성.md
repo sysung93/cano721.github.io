@@ -1,7 +1,7 @@
 ---
 
-title: "JavaSpring 설치 및 프로젝트 생성"
-excerpt: "Spring 프로젝트 생성 및 실행"
+title: "1.JavaSpring 설치 및 프로젝트 생성"
+excerpt: "shallow copy와 deep copy 차이점 알아보기"
 
 categories: [devlog]
 
@@ -13,14 +13,14 @@ toc_sticky: true
 
 date: 2021-07-10
 
-last_modified_at: 2021-07-15
+last_modified_at: 2021-07-10
 ---
 
 
 
 # JavaSpring 설치 & 프로젝트 생성
 
-> <사전 준비물>
+> **<사전 준비물>**
 >
 > JAVA 11 설치(사전에 다른 버전이 설치되어있다면 11로 변경 -> 변경 실패 시 자바 다 삭제했다가 새로 까는게 편함..)
 >
@@ -30,9 +30,11 @@ last_modified_at: 2021-07-15
 
 
 
-https://start.spring.io/ 접속
+[https://start.spring.io/](https://start.spring.io/) 접속
 
 : 스프링 관련 프로젝트 생성 사이트
+
+
 
 
 
@@ -115,7 +117,7 @@ https://start.spring.io/ 접속
 ---
 
 [^1]: XML(eXtensible Markup Language) : HTML과 매우 비슷한 문자 기반의 마크업 언어(추후 정리)
-[^2]:JVM에서 실행되는 스크립트 언어
+[^2]: JVM에서 실행되는 스크립트 언어
 [^3]: 설정 주입 방식으로, maven에 비해 보다 유연하게 설정 주입이 가능하단 뜻으로 해석
 [^4]: 상속구조이기에 부모 모듈의 기능 변경이 하위모듈에도 영향이 갈 수 있음.
 
@@ -153,3 +155,12 @@ hello-spring -> src -> main -> java -> hello.hellospring -> HelloSpringApplicati
 
 해당 이미지와 같이 나온다면 정상적인 실행!
 
+
+
+
+
+
+
+### 참조
+
+[김영한님의 인프런강의](https://www.inflearn.com/course/%EC%8A%A4%ED%94%84%EB%A7%81-%EC%9E%85%EB%AC%B8-%EC%8A%A4%ED%94%84%EB%A7%81%EB%B6%80%ED%8A%B8)
