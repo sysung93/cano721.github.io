@@ -1,6 +1,6 @@
 ---
 
-title: "3.SpringBoot View 환경설정"
+title: "3.SpringBoot View 환경설정 & Build"
 excerpt: "View 환경설정,SpringBoot 실행"
 
 categories: [devlog]
@@ -13,12 +13,12 @@ toc_sticky: true
 
 date: 2021-07-16
 
-last_modified_at: 2021-07-16
+last_modified_at: 2021-07-18
 ---
 
 
 
-# SpringBoot View 환경설정
+# SpringBoot View 환경설정 & Build
 
 > **<사전 준비물>**
 >
@@ -118,6 +118,76 @@ viewResolver 찾는방법: 'resources:templates/' + 리턴값 + '.html'
 ```
 
 data 에 hello! 가 반환됨
+
+
+
+
+
+#### Build
+
+
+
+cmd 콘솔창에서 입력
+
+````
+<윈도우 기준!>
+
+해당 파일 경로로 이동
+
+cd ~~ : 경로 이동 명령어
+cd .. : 이전 경로 이동 명령어
+dir : 해당 경로에 있는 파일과 하위 디렉토리 목록 보여줌
+
+C:\IOT\work\javaSpring\hello-spring>
+
+해당경로로 이동한 다음 순차적으로 명령어 입력
+
+gradlew bat
+
+gradlew build
+
+빌드 파일 설치되었을거임
+다시 경로 이동
+
+cd build
+cd libs
+
+C:\IOT\work\javaSpring\hello-spring\build\libs
+
+dir 명령어 입력하면
+
+18,825,924 hello-spring-0.0.1-SNAPSHOT.jar
+
+해당 파일 존재
+
+java -jar hello-spring-0.0.1-SNAPSHOT.jar 명령어 입력
+
+스프링 실행완료
+
+````
+
+
+
+추후에 배포 시엔 
+
+hello-spring-0.0.1-SNAPSHOT.jar
+
+이 파일만 복사해서 서버에서 실행하면 됨
+
+
+
+**요약!**
+
+1. 콘솔(cmd)로 이동
+2. 파일 경로 이동
+3. gradlew bat 명령어 입력
+4. gradlew build 명령어 입력
+5. \build\libs 경로로 이동
+6. java -jar hello-spring-0.0.1-SNAPSHOT.jar 명령어 입력
+   1.  hello-spring의 경우 파일명!
+7. 웹사이트에서 실행 확인
+
+
 
 
 
