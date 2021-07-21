@@ -1,6 +1,6 @@
 ---
 
-title: "5.SpringBoot 회원관리 예제"
+title: "6.SpringBoot 회원관리 예제"
 excerpt: "회원 서비스 개발, 회원 서비스 테스트"
 
 categories: [devlog]
