@@ -224,7 +224,7 @@ public class MemoryMemberRepository implements MemberRepository{
 
 
 
-* Test폴더내에 package 생성
+* Test폴더내에 hellospring 내에 package 생성
 * package에 test용 클래스 생성
 
 
