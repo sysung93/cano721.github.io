@@ -55,10 +55,16 @@ public class MemberController {
 }
 ```
 
+
+
+
 ```
 @Repository
 public class MemoryMemberRepository implements MemberRepository{
 ```
+
+
+
 
 ```
 @Service
@@ -166,33 +172,32 @@ public class SpringConfig {
 
 * di의 3가지
   * ```
-    @Autowired
     public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
     ```
-
+    
     * 생성자주입
-
-  * ```
-    @Autowired private MemberService memberService;
-    ```
-
-    * 필드주입
-
+    
   * ```
     @Autowired
+    private MemberService memberService;
+    ```
+    
+    * 필드주입
+    
+  * ```
     public void setMemberService(MemberService memberService) {
         this.memberService = memberService;
     }
     ```
-
+    
     * 세터 주입
     * 세터주입의 단점은 누군가 컨트롤러를 호출했을때 public으로 열려있어야한다.(노출이 되어있음)
     * 변경이 가능함
-
+    
   * 의존관계가 실행중에 동적으로 변하는 경우는 거의 없으므로 생성자 주입을 권장함
-
+  
 * 실무에서는 주로 정형화된 컨트롤러, 서비스, 리포지토리  같은 코드는 컴포넌트 스캔을 사용. 정형화되지 않거나, 상황에따라 구현 클래스가 변경해야 하면 설정을 통해 스프린 빈으로 등록
 
   * 추후 구현체를 바꾼다던지 할때 기존 운영코드를 수정안하고 설정파일에서만 수정해주면 됨
