@@ -12,7 +12,7 @@ toc_sticky: true
 
 date: 2021-09-15
 
-last_modified_at: 2021-09-15
+last_modified_at: 2021-11-08
 
 ---
 
@@ -331,13 +331,140 @@ last_modified_at: 2021-09-15
 
 
 
+* AppConfig 리팩토링
+
+  * <img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/springCore/springCore12.JPG?raw=true">
+
+  * ```
+    package hello.core;
+    
+    import hello.core.discount.DiscountPolicy;
+    import hello.core.discount.FixDiscountPolicy;
+    import hello.core.member.MemberRepository;
+    import hello.core.member.MemberService;
+    import hello.core.member.MemberServiceImpl;
+    import hello.core.member.MemoryMemberRepository;
+    import hello.core.order.OrderService;
+    import hello.core.order.OrderServiceImpl;
+    
+    public class AppConfig {
+    
+        public MemberService memberService() {
+            return new MemberServiceImpl(memberRepository());
+        }
+    
+        public OrderService orderService(){
+            return new OrderServiceImpl(memberRepository(),discountPolicy());
+        }
+    
+        private MemberRepository memberRepository() {
+            return new MemoryMemberRepository();
+        }
+    
+        public DiscountPolicy discountPolicy(){
+            return new FixDiscountPolicy();
+        }
+    }
+    ```
+
+  * 기존 중복 되었던 `new MemoryMemberRepository()` 이런 부분들을 없애고 역할에 따른 구현이 잘 보이게 리팩토링함.
+
+  
+
+
+
+* 새로운 구조와 할인 정책 적용
+
+  * 정액 할인 정책을 정률 할인 정책으로 변경해보자
+
+  * Fix -> RateDiscountPolicy
+
+  * <img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/springCore/springCore13.JPG?raw=true">
+
+  * ```
+    package hello.core;
+    
+    import hello.core.discount.DiscountPolicy;
+    import hello.core.discount.FixDiscountPolicy;
+    import hello.core.discount.RateDiscountPolicy;
+    import hello.core.member.MemberRepository;
+    import hello.core.member.MemberService;
+    import hello.core.member.MemberServiceImpl;
+    import hello.core.member.MemoryMemberRepository;
+    import hello.core.order.OrderService;
+    import hello.core.order.OrderServiceImpl;
+    
+    public class AppConfig {
+    
+        public MemberService memberService() {
+            return new MemberServiceImpl(memberRepository());
+        }
+    
+        public OrderService orderService(){
+            return new OrderServiceImpl(memberRepository(),discountPolicy());
+        }
+    
+        private MemberRepository memberRepository() {
+            return new MemoryMemberRepository();
+        }
+    
+        public DiscountPolicy discountPolicy(){
+            //return new FixDiscountPolicy();
+            return new RateDiscountPolicy();
+        }
+    }
+    ```
+
+  * AppConfig에서 return 타입을 `FixDiscountPolicy` 에서 `RateDiscountPolicy`로 바꾸면 끝!
+
+  * 이제 할인정책을 변경해도 애플리케이션 구성 역할을 담당하는 AppConfig에서만 변경하면 된다.
+
+  * 공연 기획자라고 생각하고 공연 기획자는 참여자인 구현 객체를 다 알아야 한다!
 
 
 
 
 
+### 좋은 객체 지향 설계의 5가지 원칙의 적용
+
+##### 3가지 SRP,DIP,OCP 적용
 
 
+
+**SRP 단일 책임 원칙**
+
+한 클래스는 하나의 책임만 가져야 한다.
+
+
+
+* 클라이언트 객체는 직접 구현 객체를 생성하고, 연결하고 ,실행하는 다양한 책임을 가지고 있었음.
+* SRP 단일 책임 원칙을 따르면서 관심사를 분리
+* 구현 객체를 생성하고 연결하는 책임은 AppConfig가 담당
+* 클라이언트 객체는 실행하는 책임만 담당하게 적용
+
+
+
+**DIP 의존관계 역전 원칙**
+
+프로그래머는 "추상화에 의존해야지, 구체화에 의존하면 안된다." 의존성 주입은 이 원칙을 따르는 방법 중 하나이다.
+
+
+
+* 새로운 할인 정책을 개발하고, 적용하려고 하니 클라이언트 코드도 함께 변경해야했었음. 왜냐하면 `OrderServiceImpl`은 DIP를 지키며 `DiscountPolicy`추상화 인터페이스에 의존하는 것 같았지만, `FixDiscountPolicy` 구체화 구현 클래스도 함께 의존했었음!
+* 클라이언트 코드를 `DiscountPolicy`추상화 인터페이스에만 의존하도록 코드 변경하고, AppConfig가 `FixDiscountPolicy` 객체 인스턴스를 클라이언트 코드 대신 생성해서 클라이언트 코드에 의존관계 주입함.
+
+
+
+**OCP 개방 폐쇄 원칙**
+
+소프트웨어 요소는 확장에는 열려 있으나 변경에는 닫혀 있어야 한다.
+
+
+
+* 다형성 사용하고 클라이언트가 DIP를 지킴
+* 애플리케이션을 사용영역과 구성 영역으로 나눔
+* 할인정책을 변경했을때 `AppConfig`에서만 Fix ->RateDiscountPolicy로 변경해서 클라이언트 코드에 주입하므로 클라이언트 코드내에선 변경할게 없음!
+* 소프트웨어 요소를 새롭게 확장해도 사용 영역의 변경은 닫혀 있다! 
 
 
 
