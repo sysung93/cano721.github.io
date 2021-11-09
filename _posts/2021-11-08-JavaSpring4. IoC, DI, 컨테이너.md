@@ -1,5 +1,5 @@
 ---
-title: "5. 스프링으로 전환하기"
+title: "4.JavaSpring IoC, DI, 컨테이너"
 excerpt: ""
 
 categories: [devlog]
@@ -22,19 +22,17 @@ last_modified_at: 2021-11-08
 
 
 
-# 스프링으로 전환하기
+**제어의 역전 IoC(Inversion of Control)**
 
+* 기존 프로그램은 클라이언트 구현 객체가 스스로 필요한 서버 구현 객체 생성, 연결, 실행했다. 한마디로 구현 객체가 프로그램의 제어 흐름을 스스로 조종했었다.
 
+* 반면에 AppConfig가 등장한 이후에 구현 객체는 자신의 로직을 실행하는 역할만 담당! 프로그램의 제어 흐름은 이제 AppConfig가 가져감. 예를 들어, `OrderServiceImpl`은 필요한 인터페이스를 호출하지만 어떤 구현 객체가 실행될진 모른다.
 
-지금까지 순수한 자바 코드만으로 DI를 적용한것. 이제 스프잉을 사용해서 적용할것!
+* 프로그램에 대한 제어 흐름에 대한 권한은 모두 AppConfig가 가지고 있고, `OrderServiceImpl`도 AppConfig가 생성한다. `OrderServiceImpl`이 아닌 OrderService 인터페이스의 다른 구현 객체를 생성하고 실행할 수도 있다.
 
+* 이렇듯 프로그램의 제어 흐름을 직접 제어하는 것이 아니라 외부에서 관리하는 것을 제어의 역전(IoC)라고 한다.
 
-
-* AppConfig
-
-  * AppConfig에 설정을 구성한다는 뜻인 `@Configuration` 어노테이션을 붙여줌.
-
-  * 각 메서드에 `@Bean`을 붙여 스프링 컨테이너에 스프링 빈으로 등록한다.
+* AppConfig 코드
 
   * ```
     package hello.core;
@@ -48,31 +46,21 @@ last_modified_at: 2021-11-08
     import hello.core.member.MemoryMemberRepository;
     import hello.core.order.OrderService;
     import hello.core.order.OrderServiceImpl;
-    import org.springframework.context.annotation.Bean;
-    import org.springframework.context.annotation.Configuration;
     
-    @Configuration
     public class AppConfig {
     
-        @Bean
         public MemberService memberService() {
-    
             return new MemberServiceImpl(memberRepository());
         }
     
-        @Bean
         public OrderService orderService(){
-    
             return new OrderServiceImpl(memberRepository(),discountPolicy());
         }
     
-        @Bean
-        public MemberRepository memberRepository() {
-    
+        private MemberRepository memberRepository() {
             return new MemoryMemberRepository();
         }
     
-        @Bean
         public DiscountPolicy discountPolicy(){
             //return new FixDiscountPolicy();
             return new RateDiscountPolicy();
@@ -80,87 +68,42 @@ last_modified_at: 2021-11-08
     }
     ```
 
-* MemberApp
-
-  * ```
-    package hello.core;
-    
-    import hello.core.member.Grade;
-    import hello.core.member.Member;
-    import hello.core.member.MemberService;
-    import hello.core.member.MemberServiceImpl;
-    import org.springframework.context.ApplicationContext;
-    import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-    
-    public class MemberApp {
-    
-        public static void main(String[] args) {
-    //        AppConfig appConfig = new AppConfig();
-    //        MemberService memberService = appConfig.memberService();
-    
-            ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
-            MemberService memberService = applicationContext.getBean("memberService", MemberService.class);
-    
-            Member member = new Member(1l, "memeberA", Grade.VIP);
-            memberService.join(member);
-    
-            Member findMember = memberService.findMember(1l);
-            System.out.println("new member = " + member.getName());
-            System.out.println("findMember = " + findMember.getName());
-        }
-    }
-    ```
-
-* OrderApp
-
-  * ```
-    package hello.core;
-    
-    import hello.core.member.Grade;
-    import hello.core.member.Member;
-    import hello.core.member.MemberService;
-    import hello.core.member.MemberServiceImpl;
-    import hello.core.order.Order;
-    import hello.core.order.OrderService;
-    import hello.core.order.OrderServiceImpl;
-    import org.springframework.context.ApplicationContext;
-    import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-    
-    public class OrderApp {
-    
-        public static void main(String[] args) {
-    
-    //        AppConfig appConfig = new AppConfig();
-    //        MemberService memberService = appConfig.memberService();
-    //        OrderService orderService = appConfig.orderService();
-    
-            ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
-    
-            MemberService memberService = applicationContext.getBean("memberService",MemberService.class);
-            OrderService orderService = applicationContext.getBean("orderService", OrderService.class);
-    
-            Long memberId = 1l;
-            Member member = new Member(memberId, "memberA", Grade.VIP);
-            memberService.join(member);
-    
-            Order order = orderService.createOrder(memberId, "itemA", 20000);
-    
-            System.out.println("order = " + order.toString());
-        }
-    }
-    ```
 
 
 
-**스프링 컨테이너**
 
-* `ApplicationContext`를 스프링 컨테이너라 한다.
-* 기존에는 개발자가 `AppConfig`를 사용해서 직접 객체를 생성하고 DI를 했지만, 이제부터는 스프링 컨테이너를 통해서 사용한다.
-* `Configuration`이 붙은 `AppConfig`를 설정정보로 사용하고, `@Bean`이라 적힌 메서드를 모두 호출해서 반환된 객체를 스프링 컨테이너에 등록한다. 이렇게 스프링 컨테이너에 등록된 객체를 스프링 빈이라고 한다.
-* 스프링 빈은 `@Bean` 어노테이션이 붙은 메서드의 명을 스프링 빈의 이름으로 사용한다.
-* 이전에는 필요한 객체를 AppConfig를 사용해서 직접 조회했지만, 이제는 스프링 컨테이너를 통해서 필요한 스프링 빈을 찾아야한다. 스프링 빈은 `applicationContext.getBean()`메서드를 사용해서 찾을 수 있다.
+**프레임워크 vs 라이브러리**
+
+* 프레임워크가 내가 작성한 코드를 제어하고, 대신 실행하면 그것은 프레임워크가 맞다(JUnit)
+* 반면에 내가 작성한 코드가 직접 제어의 흐름을 담당한다면 그것은 프레임워크가 아니라 라이브러리다.
 
 
+
+**의존관계 주입 DI(Dependency Injection)**
+
+* `OrderServiceImpl` 은 `DiscountPolicy` 인터페이스에 의존한다. 실제 어떤 구현 객체가 사용될지는 모른다.
+* 의존관계는 "정적인 클래스 의존 관계와, 실행 시점에 결정되는 동적인 객체(인스턴스) 의존 관계" 둘을 분리해서 생각해야 한다.
+* **정적인 클래스 의존관계**
+  * 클래스가 사용하는 import만 보고 의존관계를 쉽게 판단할 수 있다. 정적인 의존관계는 실행하지 않아도 분석 가능!
+  * 그러나 이러한 클래스 의존관계만으로는 실제 어떤 객체가 `OrderServiceImpl`에 주입될지 알 수 없다.
+  * <img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/springCore/springCore14.JPG?raw=true">
+* **동적인 객체 인스턴스 의존 관계**
+  * 애플리케이션 실행 시점에 실제 생성된 객체 인스턴스의 참조가 연결된 의존 관계다.
+  * <img src="https://github.com/cano721/cano721.github.io/blob/master/_posts/md-images/springCore/springCore15.JPG?raw=true">
+  * 애플리케이션 **실행 시점(런타임)**에 외부에서 실제 구현 객체를 생성하고 클라이언트에 전달해서 클라이언트와 서버의 실제 의존관계가 연결 되는 것을 **의존관계 주입**이라고 한다!
+  * 객체 인스턴스를 생성하고, 그 참조값을 전달해서 연결된다.
+  * 의존관계 주입을 사용하면 클라이언트 코드를 변경하지 않고, 클라이언트가 호출하는 대상의 타입 인스턴스를 변경할 수 있다.
+
+
+
+
+
+### IoC 컨테이너, DI 컨테이너
+
+* AppConfig처럼 객체를 생성하고 관리하면서 의존관계를 연결해 주는 것을
+* **IoC컨테이너** 또는 **DI 컨테이너** 라 한다.
+* 의존관계 주입에 초점을 맞추어 최근에는 주로 DI 컨테이너라 한다.
+* 또는 어샘블러, 오브젝트 팩토리 등으로 불리기도 한다.
 
 
 
